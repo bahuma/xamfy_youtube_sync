@@ -60,7 +60,7 @@ if ($client->getAccessToken()) {
                   
                   $videoSnippet['description'] .= "Spieler:\n";
                   foreach($xamfy_video->spieler as $spieler) {
-                      $videoSnippet['description'] .= "- " . $spieler ."\n"
+                      $videoSnippet['description'] .= "- " . $spieler ."\n";
                   }
                   
                   $videoSnippet['description'] .= "\n";
@@ -73,7 +73,7 @@ if ($client->getAccessToken()) {
                   $videoSnippet['description'] .= "\n";
                   $videoSnippet['description'] .= "+++++\n";
                   $videoSnippet['description'] .= "\n";
-                  $videoSnipper['description'] .= "Videos von Xamfy wird mit 100% Recycling-Pixel aus rein gentechnikfreier, ökologischer Freiland-Bodenhaltung erstellt."
+                  $videoSnipper['description'] .= "Videos von Xamfy wird mit 100% Recycling-Pixel aus rein gentechnikfreier, ökologischer Freiland-Bodenhaltung erstellt.";
                   
                   $updateResponse = $youtube->videos->update("snippet", $video);
                   
