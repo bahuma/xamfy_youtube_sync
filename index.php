@@ -41,38 +41,37 @@ if (isset($_SESSION['token'])) {
 
 // Check to ensure that the access token was successfully acquired.
 if ($client->getAccessToken()) {
-  try{
-      // THIS IS AN EXAMPLE VIDEO ID! HERE'S GOING TO BE THE LOOP
-      $videoId = "GvhirnDgclk";
-      
-      // Call the API's videos.list method tho retrieve the video resource.
-      $listResponse = $youtube->videos->listvideos("snippet",
-        array('id' => $videoId));
-    
-      // If $listResponse is empty, the specified video was not found.
-      if(empty($listResponse)) {
-          $htmlBody .= sprintf("<h3> Can't find a video with video id: %s</h3>", $videoId);
-      } else {
-          // Since the request specified a video ID, the response only contains one video resource.
-          $video = $listResponse[0];
-          $videoSnippet = $video['snippet'];
-          $description = $videoSnippet['description'];
-          
-          // Set Sample Description Text;
-          
-          $videoSnippet['description'] = "DIES IST EIN TEST";
-          
-          $updateResponse = $youtube->videos->update("snippet", $video);
-          
-          $htmlBody .= $updateResponse;
+  foreach($xamfy_videos as $xamfy_video) {
+      try{
+          // THIS IS AN EXAMPLE VIDEO ID! HERE'S GOING TO BE THE LOOP
+          if ($xamfy_video->youtube_id == "GvhirnDgclk") {
+                        
+              // Call the API's videos.list method tho retrieve the video resource.
+              $listResponse = $youtube->videos->listvideos("snippet",
+                array('id' => $xamfy_video->youtube_id));
+            
+              // If $listResponse is empty, the specified video was not found.
+              if(empty($listResponse)) {
+                  $htmlBody .= sprintf("<h3> Can't find a video with video id: %s</h3>", $videoId);
+              } else {
+                  // Since the request specified a video ID, the response only contains one video resource.
+                  $video = $listResponse[0];
+                  $videoSnippet = $video['snippet'];
+                  
+                  $videoSnippet['description'] = $xamfy_video->description;
+                  
+                  $updateResponse = $youtube->videos->update("snippet", $video);
+                  
+                  $htmlBody .= $updateResponse;
+              }
+          }
+      } catch (Google_ServiceException $e) {
+          $htmlBody .=sprintf('<p>A service error occured: <code>%s</code></p>',
+            htmlspecialchars($e->getMessage()));
+      } catch (Google_Exception $e) {
+          $htmlBody .=sprintf('<p>An client error occured: <code>%s</code></p>',
+            htmlspecialchars($e->getMessage()));
       }
-      
-  } catch (Google_ServiceException $e) {
-      $htmlBody .=sprintf('<p>A service error occured: <code>%s</code></p>',
-        htmlspecialchars($e->getMessage()));
-  } catch (Google_Exception $e) {
-      $htmlBody .=sprintf('<p>An client error occured: <code>%s</code></p>',
-        htmlspecialchars($e->getMessage()));
   }
 } else {
     // If the user hasn't authorized the app, initiate the OAuth flow
