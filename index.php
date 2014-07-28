@@ -45,6 +45,11 @@ if ($client->getAccessToken()) {
           $htmlBody .= sprintf("<h3> Can't find a video with video id: %s</h3>", $videoId);
       } else {
           // Since the request specified a video ID, the response only contains one video resource.
+          $video = $listResponse[0];
+          $videoSnippet = $video['snippet'];
+          $description = $videoSnippet['description'];
+          
+          print $description;
       }
       
   } catch (Google_ServiceException $e) {
