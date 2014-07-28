@@ -33,6 +33,19 @@ if (isset($_SESSION['token'])) {
 // Check to ensure that the access token was successfully acquired.
 if ($client->getAccessToken()) {
   try{
+      // THIS IS AN EXAMPLE VIDEO ID! HERE'S GOING TO BE THE LOOP
+      $videoId = "GvhirnDgclk";
+      
+      // Call the API's videos.list method tho retrieve the video resource.
+      $listResponse = $youtube->videos->listvideos("snippet",
+        array('id' => $videoId));
+    
+      // If $listResponse is empty, the specified video was not found.
+      if(empty($listResponse)) {
+          $htmlBody .= sprintf("<h3> Can't find a video with video id: %s</h3>", $videoId);
+      } else {
+          // Since the request specified a video ID, the response only contains one video resource.
+      }
       
   } catch (Google_ServiceException $e) {
       $htmlBody .=sprintf('<p>A service error occured: <code>%s</code></p>',
