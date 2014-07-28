@@ -49,7 +49,13 @@ if ($client->getAccessToken()) {
           $videoSnippet = $video['snippet'];
           $description = $videoSnippet['description'];
           
-          print $description;
+          // Set Sample Description Text;
+          
+          $video['snippet']['description'] = "DIES IST EIN TEST";
+          
+          $updateResponse = $youtube->videos->update("description", $description);
+          
+          $htmlBody .= $updateResponse;
       }
       
   } catch (Google_ServiceException $e) {
