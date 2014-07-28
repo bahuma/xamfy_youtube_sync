@@ -53,7 +53,7 @@ if ($client->getAccessToken()) {
           
           $videoSnippet['description'] = "DIES IST EIN TEST";
           
-          $updateResponse = $youtube->videos->update("description", $video);
+          $updateResponse = $youtube->videos->update("snippet", $video);
           
           $htmlBody .= $updateResponse;
       }
