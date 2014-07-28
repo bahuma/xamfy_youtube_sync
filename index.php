@@ -73,7 +73,7 @@ if ($client->getAccessToken()) {
                   $videoSnippet['description'] .= "\n";
                   $videoSnippet['description'] .= "+++++\n";
                   $videoSnippet['description'] .= "\n";
-                  $videoSnipper['description'] .= "Videos von Xamfy wird mit 100% Recycling-Pixel aus rein gentechnikfreier, ökologischer Freiland-Bodenhaltung erstellt.";
+                  $videoSnippet['description'] .= "Videos von Xamfy wird mit 100% Recycling-Pixel aus rein gentechnikfreier, ökologischer Freiland-Bodenhaltung erstellt.";
                   
                   $updateResponse = $youtube->videos->update("snippet", $video);
                   
