@@ -6,15 +6,6 @@ require_once("config.php");
 
 session_start();
 
-
-$xamfy_videos = json_decode(file_get_contents($config['xamfy_api']['url']));
-
-print "<pre>";
-print_r($xamfy_videos);
-print "</pre>";
-
-
-
 $client = new Google_Client();
 $client->setClientId($config['oauth']['CLIENT_ID']);
 $client->setClientSecret($config['oauth']['CLIENT_SECRET']);
@@ -41,6 +32,7 @@ if (isset($_SESSION['token'])) {
 
 // Check to ensure that the access token was successfully acquired.
 if ($client->getAccessToken()) {
+  $xamfy_videos = json_decode(file_get_contents($config['xamfy_api']['url']));
   foreach($xamfy_videos as $xamfy_video) {
       try{
           // THIS IS AN EXAMPLE VIDEO ID! HERE'S GOING TO BE THE LOOP
@@ -58,7 +50,30 @@ if ($client->getAccessToken()) {
                   $video = $listResponse[0];
                   $videoSnippet = $video['snippet'];
                   
-                  $videoSnippet['description'] = $xamfy_video->description;
+                  $videoSnippet['title'] = $xamfy_video->composed_title;
+                  $videoSnippet['description'] = "Mehr Infos zum Video: http://xamfy.de/video"
+                    . $xamfy_video->xamfy_id . "\n\n";
+                  $videoSnippet['description'] .= "+++++\n";
+                  $videoSnippet['description'] .= "\n";
+                  $videoSnippet['description'] .= $xamfy_video->description . "\n";
+                  $videoSnippet['description'] .= "\n";
+                  
+                  $videoSnippet['description'] .= "Spieler:\n";
+                  foreach($xamfy_video->spieler as $spieler) {
+                      $videoSnippet['description'] .= "- " . $spieler ."\n"
+                  }
+                  
+                  $videoSnippet['description'] .= "\n";
+                  $videoSnippet['description'] .= "+++++\n";
+                  $videoSnippet['description'] .= "\n";
+                  $videoSnippet['description'] .= "Offizielle Website: http://xamfy.de\n";
+                  $videoSnippet['description'] .= "Facebook: http://xamfy.de/facebook\n";
+                  $videoSnippet['description'] .= "Twitter: http://xamfy.de/twitter\n";
+                  $videoSnippet['description'] .= "Googleplus: http://xamfy.de/googleplus\n";
+                  $videoSnippet['description'] .= "\n";
+                  $videoSnippet['description'] .= "+++++\n";
+                  $videoSnippet['description'] .= "\n";
+                  $videoSnipper['description'] .= "Videos von Xamfy wird mit 100% Recycling-Pixel aus rein gentechnikfreier, ökologischer Freiland-Bodenhaltung erstellt."
                   
                   $updateResponse = $youtube->videos->update("snippet", $video);
                   
