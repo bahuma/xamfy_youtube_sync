@@ -51,9 +51,9 @@ if ($client->getAccessToken()) {
           
           // Set Sample Description Text;
           
-          $video['snippet']['description'] = "DIES IST EIN TEST";
+          $videoSnippet['description'] = "DIES IST EIN TEST";
           
-          $updateResponse = $youtube->videos->update("description", $description);
+          $updateResponse = $youtube->videos->update("description", $video);
           
           $htmlBody .= $updateResponse;
       }
