@@ -25,3 +25,41 @@ if (isset($_GET['code'])) {
     $_SESSION['token'] = $client->getAccessToken();
     header('Location: ' . $redirect);
 }
+
+if (isset($_SESSION['token'])) {
+    $client->setAccessToken($_SESSION['token']);
+}
+
+// Check to ensure that the access token was successfully acquired.
+if ($client->getAccessToken()) {
+  try{
+      
+  } catch (Google_ServiceException $e) {
+      $htmlBody .=sprintf('<p>A service error occured: <code>%s</code></p>',
+        htmlspecialchars($e->getMessage()));
+  } catch (Google_Exception $e) {
+      $htmlBody .=sprintf('<p>An client error occured: <code>%s</code></p>',
+        htmlspecialchars($e->getMessage()));
+  }
+} else {
+    // If the user hasn't authorized the app, initiate the OAuth flow
+    $state = mt_rand();
+    $client->setState($state);
+    $_SESSION['state'] = $state;
+    
+    $authUrl = $client->createAuthUrl();
+    $htmlBody = '<h3>Authorization Required</h3>
+    <p>You need to <a href="'.$authUrl.'">authorize access</a> before proceeding.</p>
+    ';
+}
+?>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Videos Updated</title>
+    </head>
+    <body>
+        <?php print $htmlBody ?>    
+    </body>
+</html>
