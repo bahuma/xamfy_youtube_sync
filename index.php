@@ -77,7 +77,7 @@ if ($client->getAccessToken()) {
                   
                   $updateResponse = $youtube->videos->update("snippet", $video);
                   
-                  $htmlBody .= $updateResponse;
+                  $htmlBody = "<h3>Successfully updated</h3>";
               }
           }
       } catch (Google_ServiceException $e) {
