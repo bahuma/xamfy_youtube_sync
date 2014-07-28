@@ -2,3 +2,4 @@
 composer.phar
 .c9
 .git
+composer.lock
