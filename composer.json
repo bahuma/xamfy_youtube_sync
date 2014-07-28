@@ -1,0 +1,13 @@
+{
+    "name": "bahuma/xamfy_youtube_sync",
+    "description": "Syncs the Video descriptions from the xamfy homepage to youtube",
+    "authors": [
+        {
+            "name": "Maximilian Bachhuber",
+            "email": "bahuma20@bahuma-online.de"
+        }
+    ],
+    "require": {
+
+    }
+}
