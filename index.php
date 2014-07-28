@@ -6,6 +6,15 @@ require_once("config.php");
 
 session_start();
 
+
+$xamfy_videos = json_decode(file_get_contents($config['xamfy_api']['url']));
+
+print "<pre>";
+print_r($xamfy_videos);
+print "</pre>";
+
+
+
 $client = new Google_Client();
 $client->setClientId($config['oauth']['CLIENT_ID']);
 $client->setClientSecret($config['oauth']['CLIENT_SECRET']);
