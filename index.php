@@ -33,52 +33,51 @@ if (isset($_SESSION['token'])) {
 // Check to ensure that the access token was successfully acquired.
 if ($client->getAccessToken()) {
   $xamfy_videos = json_decode(file_get_contents($config['xamfy_api']['url']));
+  $htmlBody = "<h3>Update startet at " . time() . "<br><ul>";
   foreach($xamfy_videos as $xamfy_video) {
+      $htmlBody .= "<li>Video " . $xamfy_video->composed_title . "</li>";
       try{
-          // THIS IS AN EXAMPLE VIDEO ID! HERE'S GOING TO BE THE LOOP
-          if ($xamfy_video->youtube_id == "GvhirnDgclk") {
-                        
-              // Call the API's videos.list method tho retrieve the video resource.
-              $listResponse = $youtube->videos->listvideos("snippet",
-                array('id' => $xamfy_video->youtube_id));
             
-              // If $listResponse is empty, the specified video was not found.
-              if(empty($listResponse)) {
-                  $htmlBody .= sprintf("<h3> Can't find a video with video id: %s</h3>", $videoId);
-              } else {
-                  // Since the request specified a video ID, the response only contains one video resource.
-                  $video = $listResponse[0];
-                  $videoSnippet = $video['snippet'];
-                  
-                  $videoSnippet['title'] = $xamfy_video->composed_title;
-                  $videoSnippet['description'] = "Mehr Infos zum Video: http://xamfy.de/video"
-                    . $xamfy_video->xamfy_id . "\n\n";
-                  $videoSnippet['description'] .= "+++++\n";
-                  $videoSnippet['description'] .= "\n";
-                  $videoSnippet['description'] .= $xamfy_video->description . "\n";
-                  $videoSnippet['description'] .= "\n";
-                  
-                  $videoSnippet['description'] .= "Spieler:\n";
-                  foreach($xamfy_video->spieler as $spieler) {
-                      $videoSnippet['description'] .= "- " . $spieler ."\n";
-                  }
-                  
-                  $videoSnippet['description'] .= "\n";
-                  $videoSnippet['description'] .= "+++++\n";
-                  $videoSnippet['description'] .= "\n";
-                  $videoSnippet['description'] .= "Offizielle Website: http://xamfy.de\n";
-                  $videoSnippet['description'] .= "Facebook: http://xamfy.de/facebook\n";
-                  $videoSnippet['description'] .= "Twitter: http://xamfy.de/twitter\n";
-                  $videoSnippet['description'] .= "Googleplus: http://xamfy.de/googleplus\n";
-                  $videoSnippet['description'] .= "\n";
-                  $videoSnippet['description'] .= "+++++\n";
-                  $videoSnippet['description'] .= "\n";
-                  $videoSnippet['description'] .= "Videos von Xamfy wird mit 100% Recycling-Pixel aus rein gentechnikfreier, ökologischer Freiland-Bodenhaltung erstellt.";
-                  
-                  $updateResponse = $youtube->videos->update("snippet", $video);
-                  
-                  $htmlBody = "<h3>Successfully updated</h3>";
+          // Call the API's videos.list method tho retrieve the video resource.
+          $listResponse = $youtube->videos->listvideos("snippet",
+            array('id' => $xamfy_video->youtube_id));
+        
+          // If $listResponse is empty, the specified video was not found.
+          if(empty($listResponse)) {
+              $htmlBody .= sprintf("<h3> Can't find a video with video id: %s</h3>", $videoId);
+          } else {
+              // Since the request specified a video ID, the response only contains one video resource.
+              $video = $listResponse[0];
+              $videoSnippet = $video['snippet'];
+              
+              $videoSnippet['title'] = $xamfy_video->composed_title;
+              $videoSnippet['description'] = "Mehr Infos zum Video: http://xamfy.de/video/"
+                . $xamfy_video->xamfy_id . "\n\n";
+              $videoSnippet['description'] .= "+++++\n";
+              $videoSnippet['description'] .= "\n";
+              $videoSnippet['description'] .= $xamfy_video->description . "\n";
+              $videoSnippet['description'] .= "\n";
+              
+              $videoSnippet['description'] .= "Spieler:\n";
+              foreach($xamfy_video->spieler as $spieler) {
+                  $videoSnippet['description'] .= "- " . $spieler ."\n";
               }
+              
+              $videoSnippet['description'] .= "\n";
+              $videoSnippet['description'] .= "+++++\n";
+              $videoSnippet['description'] .= "\n";
+              $videoSnippet['description'] .= "Offizielle Website: http://xamfy.de\n";
+              $videoSnippet['description'] .= "Facebook: http://xamfy.de/facebook\n";
+              $videoSnippet['description'] .= "Twitter: http://xamfy.de/twitter\n";
+              $videoSnippet['description'] .= "Googleplus: http://xamfy.de/googleplus\n";
+              $videoSnippet['description'] .= "\n";
+              $videoSnippet['description'] .= "+++++\n";
+              $videoSnippet['description'] .= "\n";
+              $videoSnippet['description'] .= "Videos von Xamfy werden mit 100% Recycling-Pixel aus rein gentechnikfreier, ökologischer Freiland-Bodenhaltung erstellt.";
+              
+              $updateResponse = $youtube->videos->update("snippet", $video);
+              
+              
           }
       } catch (Google_ServiceException $e) {
           $htmlBody .=sprintf('<p>A service error occured: <code>%s</code></p>',
@@ -88,6 +87,7 @@ if ($client->getAccessToken()) {
             htmlspecialchars($e->getMessage()));
       }
   }
+  $htmlBody .= "</ul><h3>Successfully updated</h3>";
 } else {
     // If the user hasn't authorized the app, initiate the OAuth flow
     $state = mt_rand();
