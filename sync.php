@@ -10,8 +10,6 @@ if (isset($_GET['node_ids'])){
     $_SESSION['node_ids'] = $_GET['node_ids'];
 }
 
-$htmlBody = "";
-
 $client = new Google_Client();
 $client->setClientId($config['oauth']['CLIENT_ID']);
 $client->setClientSecret($config['oauth']['CLIENT_SECRET']);
@@ -105,7 +103,7 @@ if ($client->getAccessToken()) {
               }
               
           }
-          $htmlBody .= "</ul><h3>Das Video wurde auf Youtube aktualisiert</h3>";
+          $htmlBody .= "</ul><h3>Successfully updated</h3>";
       }
       
   }
