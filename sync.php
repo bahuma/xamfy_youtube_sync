@@ -6,9 +6,9 @@ require_once("config.php");
 
 session_start();
 
-if (isset($_GET['node_ids']));
-    $_SESSION['node_ids'] = 
-        $_GET['node_ids'];
+if (isset($_GET['node_ids'])){
+    $_SESSION['node_ids'] = $_GET['node_ids'];
+}
 
 $client = new Google_Client();
 $client->setClientId($config['oauth']['CLIENT_ID']);
