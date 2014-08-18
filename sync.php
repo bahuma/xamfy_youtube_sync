@@ -33,7 +33,10 @@ if (isset($_SESSION['token'])) {
 // Check to ensure that the access token was successfully acquired.
 if ($client->getAccessToken()) {
   if (isset($_GET['node_ids'])) {
-      print $_GET['node_ids'];
+      
+      $nids = trim($_GET['node_ids']);
+      $nids = explode($nids, ",");
+      print_r($nids);
   }
   
 //   $xamfy_videos = json_decode(file_get_contents($config['xamfy_api']['url']));
