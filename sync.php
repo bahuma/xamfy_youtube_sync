@@ -14,6 +14,7 @@ if(isset($_GET['backto'])) {
     $_SESSION['backto'] = $_GET['backto'];
 }
 
+$htmlBody = "";
 $client = new Google_Client();
 $client->setClientId($config['oauth']['CLIENT_ID']);
 $client->setClientSecret($config['oauth']['CLIENT_SECRET']);
@@ -107,7 +108,7 @@ if ($client->getAccessToken()) {
               }
               
           }
-          $htmlBody .= "</ul><h3>Successfully updated</h3>";
+          $htmlBody .= "</ul><h3>Beschreibung auf Youtube aktualisiert</h3>";
       }
       
   }
@@ -135,6 +136,14 @@ if ($client->getAccessToken()) {
         <meta HTTP-EQUIV="REFRESH" content="3; url=<?php print $_SESSION['backto'] ?>">
         
         <?php endif; ?>
+        
+        <style type="text/css">
+            body {
+                background: #FFF;
+                text-align: center;
+                font-family: Arial;
+            }
+        </style>
     </head>
     <body>
         <?php print $htmlBody ?>    
