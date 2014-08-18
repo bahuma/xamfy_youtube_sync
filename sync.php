@@ -15,6 +15,8 @@ if(isset($_GET['backto'])) {
 }
 
 $htmlBody = "";
+$saved = false;
+
 $client = new Google_Client();
 $client->setClientId($config['oauth']['CLIENT_ID']);
 $client->setClientSecret($config['oauth']['CLIENT_SECRET']);
@@ -98,6 +100,9 @@ if ($client->getAccessToken()) {
                       $updateResponse = $youtube->videos->update("snippet", $video);
                       
                       
+                      $saved = true;
+                      
+                      
                   }
               } catch (Google_ServiceException $e) {
                   $htmlBody .=sprintf('<p>A service error occured: <code>%s</code></p>',
@@ -132,7 +137,7 @@ if ($client->getAccessToken()) {
     <head>
         <title>Videos Updated</title>
         <?php
-            if(isset($_SESSION['backto'])) :
+            if(isset($_SESSION['backto']) && $saved) :
         ?>
         <meta HTTP-EQUIV="REFRESH" content="3; url=<?php print $_SESSION['backto'] ?>">
         
