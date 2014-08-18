@@ -41,7 +41,9 @@ if ($client->getAccessToken()) {
       foreach($nids as $nid) {
           
           $xamfy_metadata = json_decode(file_get_contents($config['xamfy_api']['url']."/".$nid));
-          print_r($xamfy_metadata);
+          
+          if (count($xamfy_metatada > 0))
+            print_r($xamfy_metadata);
           
       }
       
