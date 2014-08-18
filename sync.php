@@ -45,7 +45,7 @@ if ($client->getAccessToken()) {
           if (!empty($xamfy_metadata)) {
               
               print "<pre>";
-              print_r($xamfy_metadta);
+              print_r($xamfy_metadata);
               print "</pre>";
               
               try {
