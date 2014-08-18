@@ -6,14 +6,11 @@ require_once("config.php");
 
 session_start();
 
-if (isset($_GET['node_ids']));
-    $_SESSION['node_ids'] = $_GET['node_ids'];
-
 $client = new Google_Client();
 $client->setClientId($config['oauth']['CLIENT_ID']);
 $client->setClientSecret($config['oauth']['CLIENT_SECRET']);
 $client->setScopes('https://www.googleapis.com/auth/youtube');
-$redirect = filter_var('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'],
+$redirect = filter_var('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . "?node_ids=" . $_GET['node_ids'],
     FILTER_SANITIZE_URL);
 $client->setRedirectUri($redirect);
 
@@ -35,9 +32,9 @@ if (isset($_SESSION['token'])) {
 
 // Check to ensure that the access token was successfully acquired.
 if ($client->getAccessToken()) {
-  if (isset($_SESSION['node_ids'])) {
+  if (isset($_GET['node_ids'])) {
       
-      $nids = trim($_SESSION['node_ids']);
+      $nids = trim($_GET['node_ids']);
       $nids = explode(",", $nids);
       
       
