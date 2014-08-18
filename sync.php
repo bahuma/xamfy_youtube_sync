@@ -36,7 +36,15 @@ if ($client->getAccessToken()) {
       
       $nids = trim($_GET['node_ids']);
       $nids = explode(",", $nids);
-      print_r($nids);
+      
+      
+      foreach($nids as $nid) {
+          
+          $xamfy_metadata = json_decode(file_get_contents($config['xamfy_api']['url']."/".$nid));
+          print_r($xamfy_metadata);
+          
+      }
+      
   }
   
 //   $xamfy_videos = json_decode(file_get_contents($config['xamfy_api']['url']));
