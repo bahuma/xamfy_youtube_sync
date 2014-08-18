@@ -10,6 +10,10 @@ if (isset($_GET['node_ids'])){
     $_SESSION['node_ids'] = $_GET['node_ids'];
 }
 
+if(isset($_GET['backto'])) {
+    $_SESSION['backto'] = $_GET['backto'];
+}
+
 $client = new Google_Client();
 $client->setClientId($config['oauth']['CLIENT_ID']);
 $client->setClientSecret($config['oauth']['CLIENT_SECRET']);
@@ -125,6 +129,12 @@ if ($client->getAccessToken()) {
 <html>
     <head>
         <title>Videos Updated</title>
+        <?php
+            if(isset($_SESSION['backto'])) :
+        ?>
+        <meta HTTP-EQUIV="REFRESH" content="3; url=<?php print $_SESSION['backto'] ?>">
+        
+        <?php endif; ?>
     </head>
     <body>
         <?php print $htmlBody ?>    
