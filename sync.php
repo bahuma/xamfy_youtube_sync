@@ -44,15 +44,13 @@ if ($client->getAccessToken()) {
           
           if (!empty($xamfy_metadata)) {
               
-              print "<pre>";
-              print_r($xamfy_metadata);
-              print "</pre>";
+              $xamfy_metadata = $xamfy_metadata[0];
               
               try {
             
                   // Call the API's videos.list method tho retrieve the video resource.
                   $listResponse = $youtube->videos->listvideos("snippet",
-                    array('id' => $xamfy_metadata['youtube_id']));
+                    array('id' => $xamfy_metadata->youtube_id));
                 
                   // If $listResponse is empty, the specified video was not found.
                   if(empty($listResponse)) {
