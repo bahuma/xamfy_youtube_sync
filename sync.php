@@ -35,7 +35,7 @@ if ($client->getAccessToken()) {
   if (isset($_GET['node_ids'])) {
       
       $nids = trim($_GET['node_ids']);
-      $nids = explode($nids, ",");
+      $nids = explode(",", $nids);
       print_r($nids);
   }
   
