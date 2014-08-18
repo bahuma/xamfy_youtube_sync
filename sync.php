@@ -108,7 +108,7 @@ if ($client->getAccessToken()) {
               }
               
           }
-          $htmlBody .= "</ul><h3>Beschreibung auf Youtube aktualisiert</h3>";
+          $htmlBody .= "<h3>Beschreibung auf Youtube aktualisiert</h3><p>Sie werden weitergeleitet</p>";
       }
       
   }
@@ -120,8 +120,9 @@ if ($client->getAccessToken()) {
     $_SESSION['state'] = $state;
     
     $authUrl = $client->createAuthUrl();
-    $htmlBody = '<h3>Authorization Required</h3>
-    <p>You need to <a href="'.$authUrl.'">authorize access</a> before proceeding.</p>
+    $htmlBody = '<h3>Anmeldung erforderlich</h3>
+    <p><a href="'.$authUrl.'">Loggen Sie sich mit ihrem Google Konto ein</a></p>
+    <p>Wählen Sie den Xamfy Kanal</p>
     ';
 }
 ?>
@@ -142,6 +143,10 @@ if ($client->getAccessToken()) {
                 background: #FFF;
                 text-align: center;
                 font-family: Arial;
+            }
+            
+            h3 {
+                margin-top: 100px;
             }
         </style>
     </head>
