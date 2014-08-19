@@ -135,6 +135,7 @@ if ($client->getAccessToken()) {
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
         <title>Videos Updated</title>
         <?php
             if(isset($_SESSION['backto']) && $saved) :
