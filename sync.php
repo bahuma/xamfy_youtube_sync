@@ -79,7 +79,7 @@ if ($client->getAccessToken()) {
                       $video = $listResponse[0];
                       $videoSnippet = $video['snippet'];
                       
-                      $videoSnippet['title'] = $xamfy_metadata->composed_title;
+                      $videoSnippet['title'] = $xamfy_metadata->composed_title . "[". strtoupper($xamfy_metadata->projekt_game) ."]";
                       $videoSnippet['description'] = "Mehr Infos zum Video: http://xamfy.de/video/"
                         . $xamfy_metadata->xamfy_id . "\n\n";
                       $videoSnippet['description'] .= "+++++\n";
