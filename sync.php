@@ -25,6 +25,8 @@ $redirect = filter_var('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'],
     FILTER_SANITIZE_URL);
 $client->setRedirectUri($redirect);
 
+$client->setAccessType('offline');
+
 $youtube = new Google_Service_YouTube($client);
 
 if (isset($_GET['code'])) {
@@ -38,7 +40,13 @@ if (isset($_GET['code'])) {
 }
 
 if (isset($_SESSION['token'])) {
-    $client->setAccessToken($_SESSION['token']);
+  $client->setAccessToken($_SESSION['token']);
+  if ($client->isAccessTokenExpired()) {
+    $currentTokenData = json_decode($_SESSION['token']);
+    if (isset($currentTokenData->refresh_token)) {
+        $client->refreshToken($tokenData->refresh_token);
+    }
+  }
 }
 
 // Check to ensure that the access token was successfully acquired.
